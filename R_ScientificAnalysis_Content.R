@@ -98,4 +98,48 @@ library(package) #to make package available for use
 
 #Version control - important to use with projects
 
+##  LESSON 3: SEEKING HELP
+
+?function_name
+help(function_name)
+
+?write.table()
+?write.csv() #related functions often retrieve the same help file
+#you can highlight example run and command+enter and it will run 
+
+#for help with special operators, use quotes
+?"<-"
+
+#many packages come with vignettes (tutorials and extended example documentation)
+vignette() #will list all vignettes for all installed packages
+vignette(package = "dplyr") #will list all vignettes for that package
+
+#R cheatsheets: https://posit.co/resources/cheatsheets/
+
+??function_name #does a fuzzy search (approximate string match)
+??set
+
+#Getting help via Stack Overflow
+?dput
+sessionInfo() #to get info on your R setup; your current R version and loaded packages
+
+##  LESSON 4: DATA STRUCTURES
+
+cats <- data.frame(coat = c("calico", "black", "tabby"), 
+                   weight = c(2.1, 5.0, 3.2), 
+                   likes_string = c(1, 0, 1))
+
+?write.csv
+
+#note: I manually created a data folder within the project folder before running the code below (not sure if I needed to)
+write.csv(x = cats, file = "data/feline-data.csv", row.names = FALSE) #now saving the object cats as a csv file
+
+#load in R
+cats <- read.csv(file = "data/feline-data.csv")
+
+#Check your data for Factors: R's default way for handing textual data has changed. Previously it automatically interpreted a factor. There is an easier character format. In most cases, factors are not needed and complicate your life, which is why newer versions of R read in text as "character". 
+
+str(cats) #check the data types
+
+#pick back up here: https://swcarpentry.github.io/r-novice-gapminder/04-data-structures-part1.html
 
