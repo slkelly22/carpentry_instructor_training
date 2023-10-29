@@ -2,6 +2,8 @@
 # R for Reproducible Scientific Analysis - Exploring Data Frames
 # The lesson I want to consider is 5 (Exploring Data Frames), but I'm working through Lessons 1-5 below
 
+# https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro.html
+
 ##  LESSON 1: INTRODUCTION TO R AND RSTUDIO
 
 1+100
@@ -136,10 +138,130 @@ write.csv(x = cats, file = "data/feline-data.csv", row.names = FALSE) #now savin
 
 #load in R
 cats <- read.csv(file = "data/feline-data.csv")
+View(cats)
 
-#Check your data for Factors: R's default way for handing textual data has changed. Previously it automatically interpreted a factor. There is an easier character format. In most cases, factors are not needed and complicate your life, which is why newer versions of R read in text as "character". 
+#Check your data for Factors: R's default way for handing textual data has changed. Previously it automatically interpreted a factor. There is an easier character format. In most cases, factors are not needed and complicate your life, which is why newer versions of R read in text as "character". Check now to see if your version of R automatically creater factors and convert them to character format
 
-str(cats) #check the data types
+#NOTE: For R versions > 4.0, text data is no longer converted to factors
 
-#pick back up here: https://swcarpentry.github.io/r-novice-gapminder/04-data-structures-part1.html
+str(cats) #check the data types; no factors, I have character, numeric, integer
 
+#Explore the dataset by pulling out columns
+cats$weight
+cats$coat
+
+cats$weight + 2 #SK: this adds 2 to every component
+
+paste("My cat is", cats$coat) #REMEMBER; this prints "My cat is calico" "My cat is black" "My cat is tabby"
+
+cats$weight + cats$coat #doesn't work, different data types
+
+typeof(cats$weight) #REMEMBER FUNCTION typeof; there are double(numeric), integer, complex, logical, character
+
+typeof(3.14) #double
+typeof(1L) #the L forces the number to be an integer, since by default R uses float numbers
+typeof(1) #double
+typeof(1+1i) #complex
+typeof(TRUE) #logical
+typeof("banana") #character
+
+#adding another cat to the dataset
+
+?file.show
+file.show("data/feline-data_v2.csv") #this does not exist
+
+#I'm going to create it this way
+cats <- data.frame(coat = c("calico", "black", "tabby", "tabby"), 
+                   weight = c(2.1, 5.0, 3.2, 2.3 or 2.4), #it won't read in like this because it needs the weights to be character due to the 4th one
+                   likes_string = c(1, 0, 1, 1)) 
+
+cats <- data.frame(coat = c("calico", "black", "tabby", "tabby"), 
+                   weight = c(2.1, 5.0, 3.2, "2.3 or 2.4"), 
+                   likes_string = c(1, 0, 1, 1)) 
+str(cats) #now weight is a character
+#R wants everything in a column to be the same type
+
+#made our point now reading the original file back in
+cats <- read.csv(file = "data/feline-data.csv")
+
+# Vectors and Type Coercion
+
+my_vector <- vector(length = 3)
+my_vector #Console: FALSE FALSE FALSE         
+#A vector in R is an ordered list of things with the understanding that everything in the vector must be the same data type; NOTE: If you don't choose the datatype, it'll default to LOGICAL
+another_vector <- vector(mode = "character", length = 3)
+another_vector #Console: "" "" "" 
+str(another_vector) #Console: chr [1:3] "" "" ""; note: 1:3 is the indexes of the vector
+
+str(cats$weight)
+#The columns of data we load into R data.frames are ALL VECTORS, and that's the root of why R forces everything in a column to be the same basic data type
+
+#Coercion by combining vectors
+combine_vector <- c(2, 6, 3)
+combine_vector
+str(combine_vector)
+
+#When R encounters a mix of data types (in a column), it will force everything into one data type; SK: think about importing messy datasets and why it's always so important to check data types for all variables
+quiz_vector <- c(2, 6, '3')
+str(quiz_vector) #R automatically turned this into a character vector
+
+coercion_vector <- c('a', TRUE)
+str(coercion_vector) #this is a character vector too
+
+another_coercion_vector <- c(0, TRUE)
+another_coercion_vector
+str(another_coercion_vector) #numeric vector
+
+#Type Hierarchy
+# Coercion rules go: logical -> integer -> double(numeric) -> complex -> character, where -> can be read as transformed into. For example, combining logical and character transforms the result to character
+
+c('a', TRUE) #console: "a" "TRUE"
+# a quick way to recognize character vectors are the "quotes" printed in the console
+
+#forcing coercion with .as
+
+character_vector_example <- c('0', '2', '4')
+character_vector_example #character
+
+character_coerced_to_double <- as.double(character_vector_example)
+character_coerced_to_double #numeric
+
+double_coerced_to_logical <- as.logical(character_coerced_to_double)
+double_coerced_to_logical #logical
+
+cats$likes_string #1 0 1
+#turning that logical
+cats$likes_string <- as.logical(cats$likes_string)
+cats$likes_string #T F T
+
+#Some Basic Vector Functions
+#The combine function c() will also append things to an existing vector
+
+ab_vector <- c('a', 'b')
+ab_vector
+
+combine_example <- c(ab_vector, "SWC")
+combine_example #Console: "a" "b" "SWC"
+
+mySeries <- 1:10
+mySeries
+seq(10)
+seq(1, 10, by = 0.1)
+
+sequence_example <- 20:25
+head(sequence_example, 2)
+tail(sequence_example, 4)
+
+length(sequence_example) #6
+typeof(sequence_example) #integer
+
+#we can get individual elements of a vector by using brackets
+first_element <- sequence_example[1]
+first_element
+
+## NOTE: To change a single element, use the bracket on the other side of the arrow: 
+sequence_example[1] <- 30
+sequence_example #that's cool
+
+#Pick by up with Lists
+https://swcarpentry.github.io/r-novice-gapminder/04-data-structures-part1.html
