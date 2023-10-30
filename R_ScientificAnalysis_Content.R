@@ -299,3 +299,24 @@ typeof(names(pizza_price))
 str(pizza_price)
 
 # Data Frames
+cats
+typeof(cats) #list
+# we see that data.frames look like lists under the hood
+# remember that lists are used for data of different types
+# columns of a data frame are vectors of different types, that are organized by belonging to the same table
+# A DATA.FRAME IS REALLY A LIST OF VECTORS. A special list in which all the vectors must have the same LENGTH
+# How is the special-ness written into the ojbect, so that R does not treat is like any other list, but as a table? 
+
+class(cats) #data.frame
+# a class, just like names, is an attribute attached to the object
+# Note: typeof() tells you how the object is constructed in the computer; it's fixed in R (the five data types)
+# Note: class() tells you the meaning of the object for humans; it's diverse and extendable by R packages
+
+cats$coat
+cats[ , 1]
+typeof(cats[, 1])
+str(cats[, 1])
+# each row is an observation of different variables, itself a data.frame, and thus can be composed of elements of different types
+cats[1, ]
+typeof(cats[1, ]) #list; that's interesting
+str(cats[1, ]) #data.frame; that's interesting
