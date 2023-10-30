@@ -349,3 +349,81 @@ str(matrix_example)
 nrow(matrix_example) #3
 ncol(matrix_example) #6
 length(matrix_example) #18
+
+
+##  LESSON 5: EXPLORING DATA FRAMES
+
+#Adding columns and rows in data frames
+# We already learned that the columns of a data frame are VECTORS
+
+age <- c(2, 3, 5)
+cats
+#let's add age as a column
+cbind(cats, age) #SK: this is temporary without assignment operator see View
+View(cats)
+
+#let's try to add a column with a different number of entries that rows in the data frame
+age <- c(2, 3, 5, 12)
+cbind(cats, age) #error
+age <- c(2, 3)
+cbind(cats, age) #error
+#R wants the same number of elements are rows in the dataset
+nrow(cats) #3
+length(age) #2 SK: you obviously can't do nrow() or ncol() because it's a single vector so you do length() instead to count elements in the object
+#for it to work we need nrows(cats) = length(age)
+age <- c(2, 3, 5)
+cats <- cbind(cats, age)
+
+#what about adding rows? We know that the rows of a data.frame are LISTS
+newRow <- list("tortoiseshell", 3.3, TRUE, 9)
+cats <- rbind(cats, newRow)
+cats
+
+#I just realized my data.frame still had weight_kg so I changed the row name back to weight to match the example
+names(cats) [2] <- "weight"
+cats
+
+# Removing rows
+# we can ask for a data frame minus the last row
+cats[-4, ] #SK: remember it's rows, columns; so this is saying NOT 4th row, but all columns
+#you can also remove several rows like this...
+cats[c(-3, -4), ]
+cats[1:3, ] #SK: it seems more straightforward to simply call what you want
+
+# Removing columns
+# you can remove by variable number or by index
+cats[, -4]
+
+# the %in% operator goes through each element of its left argument, in this case, the names of cats, and asks, "does this element occur in the second argument?"
+names(cats) %in% c("age") #F F F T
+
+drop <- names(cats) %in% c("age")
+cats[, !drop] #sk: still not permanent without an assignment operator
+cats
+
+# Appending to a data frame
+# key to rememeber when adding data to a data frame is that COLUMNS are VECTORS and ROWS are LISTS
+# we can also glue two data frames together with rbind
+
+cats <- rbind(cats, cats)
+cats
+# but now the row names are unnecessarily complicated; we can remove the rownames and R will automatically rename them sequentially
+rownames(cats) <- NULL #SK: I'm not sure what this changed exactly
+cats
+
+# Challenge 1
+challenge1 <- data.frame(first_name = c("Savannah"), last_name = c("Kelly"), lucky_no = c(22)) 
+challenge1
+str(challenge1)
+View(challenge1)
+#adding a row
+Sandy_row <- list("Sandy", "Petticomb", 7) #could also have done: df <- rbind(df, list("Sandy", "Petticomb", 7))
+challenge1 <- rbind(challenge1, Sandy_row)
+challenge1
+#adding a column
+challenge1 <- cbind(challenge1, coffee = c(TRUE, TRUE))
+challenge1
+
+# Realistic Example
+
+
