@@ -263,5 +263,39 @@ first_element
 sequence_example[1] <- 30
 sequence_example #that's cool
 
-#Pick by up with Lists
-https://swcarpentry.github.io/r-novice-gapminder/04-data-structures-part1.html
+# Lists
+#everything in a vector has to be the same data type, but you can have different data types in a list
+list_example <- list(1, "a", TRUE, 1+4i)
+list_example
+str(list_example) #list of 4; number 1, chr "a", logi TRUE, cplx 1+4i
+
+#to retrieve one of the elements of a list, use the double bracket
+list_example[[2]] #console: "a"
+
+#the elements of lists can also have names; prepend to the values, separated by equals
+another_list <- list(title = "Numbers", numbers = 1:10, data = TRUE)
+another_list
+#this results in a named list and we have a new function; we can access single elements another way
+another_list$title
+
+# Names - metadata stuck to the object like a label (called an attribute in R)
+# Accessing vectors and lists by name
+#you've seen how to generate a named list, generating a named vector is very similar
+pizza_price <- c(pizzasubito = 5.64, pizzafresh = 6.60, callapizza = 4.50)
+#way to retrieve elements is different
+pizza_price["pizzasubito"]
+#the list approach (below) will not work
+pizza_price$pizzasubito #console: ERROR; operator $ is invalid for atomic vectors
+#Remember this error: it's telling you that you are trying to access something like it's in a list, but it's a vector
+
+# Accessing and changing names
+#if you are only interested in the names, use the names() function
+names(pizza_price)
+#we have seen how to access and change single elements of a vector; the same is possible for names
+names(pizza_price) [3]
+names(pizza_price) [3] <- "call-a-pizza"
+pizza_price
+typeof(names(pizza_price))
+str(pizza_price)
+
+# Data Frames
