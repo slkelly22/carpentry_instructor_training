@@ -425,5 +425,29 @@ challenge1 <- cbind(challenge1, coffee = c(TRUE, TRUE))
 challenge1
 
 # Realistic Example
+# Files can be downloaded directly from the Internet with download.file function. The read.csv function can then be executed to read the downloaded file from the download location
+download.file("https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/main/episodes/data/gapminder_data.csv", destfile = "data/gapminder_data.csv")
+gapminder <- read.csv("data/gapminder_data.csv")
 
+str(gapminder)
+summary(gapminder) #descriptive stats for numeric and integer columns; length, class, mode for character columns
+typeof(gapminder$year) #integer
+typeof(gapminder$country)
+str(gapminder$country)
+length(gapminder) #interesting return: 6; gapminder is built out of a list of 6 columns
+typeof(gapminder) #list
+nrow(gapminder) #1704
+ncol(gapminder) #6
+dim(gapminder)
+
+colnames(gapminder)
+names(gapminder) #SK: was wondering why we used colnames instead names since they give the same output?
+head(gapminder)
+tail(gapminder)
+gapminder[sample(nrow(gapminder), 5), ]
+rownames(gapminder)
+
+#I just wrote a script that downloads and reads the gapminder data so now we can use it with the source function
+?source
+source(file = "load_gapminder.R")
 
