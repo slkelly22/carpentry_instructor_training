@@ -316,7 +316,36 @@ cats$coat
 cats[ , 1]
 typeof(cats[, 1])
 str(cats[, 1])
-# each row is an observation of different variables, itself a data.frame, and thus can be composed of elements of different types
+# each ROW is an observation of different variables, ITSELF A DATA.FRAME, and thus can be composed of elements of different types
 cats[1, ]
 typeof(cats[1, ]) #list; that's interesting
 str(cats[1, ]) #data.frame; that's interesting
+
+#next two lines of code return the same content, but presented differently
+cats[1] #returns the first slice of the list, in this case, first column of the data frame
+cats[[1]] #double brackets returns the contents of the list; a vector of type character
+
+cats$coat
+cats["coat"]
+cats[1,1]
+cats[, 1]
+cats[1, ]
+
+# Renaming Data Frame Columns
+# data frames have column names, wich can be accesed with the names() function
+names(cats)
+#here's how you rename the second column from cats
+names(cats) [2] <- "weight_kg"
+names(cats)
+View(cats)
+
+# Matrices
+matrix_example <- matrix(0, ncol = 6, nrow =3)
+matrix_example
+dim(matrix_example)
+typeof(matrix_example) #double
+class(matrix_example)
+str(matrix_example)
+nrow(matrix_example) #3
+ncol(matrix_example) #6
+length(matrix_example) #18
